@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug: JLINK",
+            "servertype": "jlink",
+            "interface": "swd",
+            "executable": "build/Debug/f429igt6.elf",
+            "runToEntryPoint": "main",
+            "device": "STM32F429IG",
+            "toolchainPrefix": "arm-none-eabi",
+            "svdFile": "STM32F429.svd"
+        }
+    ]
+}
