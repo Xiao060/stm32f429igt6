@@ -343,6 +343,18 @@
           },
           {
             "path": "User/syscalls.c"
+          },
+          {
+            "path": "User/stm32f4xx_it.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "System",
+        "files": [
+          {
+            "path": "System/Src/sys.c"
           }
         ],
         "folders": []
@@ -394,8 +406,9 @@
         "incList": [
           "Drivers/CMSIS/Inc",
           "Drivers/CMSIS/Device/Inc",
-          "Drivers/STM32F4xx_HAL_Driver/Inc",
-          "User"
+          "User",
+          "System/Inc",
+          "Drivers/STM32F4xx_HAL_Driver/Inc"
         ],
         "libList": [],
         "defineList": [
@@ -410,8 +423,7 @@
           "afterBuildTasks": [],
           "global": {
             "$float-abi-type": "softfp",
-            "output-debug-info": "enable",
-            "misc-control": "--specs=nosys.specs --specs=nano.specs"
+            "output-debug-info": "enable"
           },
           "c/cpp-compiler": {
             "language-c": "c11",
