@@ -29,6 +29,8 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/times.h>
+#include "stm32f4xx.h"
+#include "usart.h"
 
 
 /* Variables */
@@ -64,6 +66,7 @@ void _exit (int status)
   while (1) {}    /* Make sure we hang here */
 }
 
+// printf 重定向到串口需要重写 __io_getchar/__io_putchar 函数
 __attribute__((weak)) int _read(int file, char *ptr, int len)
 {
   (void)file;
@@ -88,6 +91,18 @@ __attribute__((weak)) int _write(int file, char *ptr, int len)
   }
   return len;
 }
+
+int __io_putchar(int ch) {
+    HAL_UART_Transmit(&g_huart, (uint8_t *)&ch, 1, 0x1000);
+    return ch;
+}
+
+int __io_getchar(void) {
+    uint8_t ch = 0;
+    HAL_UART_Receive(&g_huart, &ch, 1, 0x1000);
+    return ch;
+}
+
 
 int _close(int file)
 {
@@ -173,4 +188,22 @@ int _execve(char *name, char **argv, char **env)
   (void)env;
   errno = ENOMEM;
   return -1;
+}
+
+caddr_t _sbrk(int incr)
+{
+  extern char end;		/* Defined by the linker */
+  static char *heap_end;
+  char *prev_heap_end;
+
+  if (heap_end == 0)
+  {
+    heap_end = &end;
+    /* give 16KB area for stacks and use the rest of memory for heap*/
+    heap_end += 0x4000;
+  }
+  prev_heap_end = heap_end;
+
+  heap_end += incr;
+  return (caddr_t) prev_heap_end;
 }

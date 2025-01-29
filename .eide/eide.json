@@ -336,9 +336,6 @@
         "name": "User",
         "files": [
           {
-            "path": "User/stm32f4xx_hal_conf.h"
-          },
-          {
             "path": "User/main.c"
           },
           {
@@ -355,6 +352,12 @@
         "files": [
           {
             "path": "System/Src/sys.c"
+          },
+          {
+            "path": "System/Src/delay.c"
+          },
+          {
+            "path": "System/Src/usart.c"
           }
         ],
         "folders": []
@@ -436,10 +439,10 @@
           "asm-compiler": {},
           "linker": {
             "output-format": "elf",
-            "remove-unused-input-sections": true,
             "LD_FLAGS": "-Wl,--no-warn-rwx-segments",
             "LIB_FLAGS": "-lm",
-            "$toolName": "auto"
+            "$toolName": "auto",
+            "remove-unused-input-sections": true
           }
         }
       }

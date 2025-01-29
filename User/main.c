@@ -1,5 +1,10 @@
 #include "stm32f4xx_hal.h"
 #include "sys.h"
+#include "delay.h"
+#include <stdio.h>
+#include <string.h>
+#include "usart.h"
+
 
 int main(void) {
 
@@ -14,11 +19,22 @@ int main(void) {
     if (ret != HAL_OK) {
         return 1;
     }
-    // 配置 RCC, 设置最终的系统时钟源
+    // 配置 RCC, 设置系统时钟源使用 HSE
     sys_clock_init(25, 360, 2, 8);
+    // 参数: 系统时钟频率, 单位 Mhz
+    delay_init(180);
+    usart_init(115200);
 
     while(1) {
-
+        // delay_ms(1000);
+        if (RX_FLAG_IS(RX_FLAG_0A)) {
+            printf("Receive Data: %s\r\n", g_usart_rx_buf);
+            memset(g_usart_rx_buf, 0, USART_REC_LEN);
+            // HAL_UART_Transmit(&g_huart, (uint8_t*)"Receive Data: ", 15, 1000);
+            // HAL_UART_Transmit(&g_huart, g_usart_rx_buf, g_rx_idx, 1000);
+            g_rx_idx = 0;
+            RX_FLAG_SET(RX_FLAG_0);
+        }
     }
 
     return 0;

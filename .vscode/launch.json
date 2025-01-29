@@ -12,7 +12,11 @@
             "runToEntryPoint": "main",
             "device": "STM32F429IG",
             "toolchainPrefix": "arm-none-eabi",
-            "svdFile": "STM32F429.svd"
+            "svdFile": "STM32F429.svd",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            }
         }
     ]
 }
