@@ -13,6 +13,7 @@
             "device": "STM32F429IG",
             "toolchainPrefix": "arm-none-eabi",
             "svdFile": "STM32F429.svd",
+            "showCpuRegisters": true,
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 4
